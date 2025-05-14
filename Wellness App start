@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f2f8f9;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .emoji-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: transform 0.2s, border 0.2s;
+        }
+
+        .emoji:hover {
+            transform: scale(1.1);
+        }
+
+        .emoji.selected {
+            transform: scale(1.2);
+            border: 2px solid #4CAF50;
+            background-color: #e0f7ec;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wellness App</h1>
+    <p>How are you feeling today? Choose an emoji:</p>
+    <div class="emoji-container">
+        <span class="emoji" data-value="1" aria-label="Very Sad">😢</span>
+        <span class="emoji" data-value="2" aria-label="Sad">😟</span>
+        <span class="emoji" data-value="3" aria-label="Neutral">😐</span>
+        <span class="emoji" data-value="4" aria-label="Slightly Happy">🙂</span>
+        <span class="emoji" data-value="5" aria-label="Happy">😊</span>
+        <span class="emoji" data-value="6" aria-label="Smiling">😁</span>
+        <span class="emoji" data-value="7" aria-label="Very Happy">😄</span>
+        <span class="emoji" data-value="8" aria-label="Cheerful">😃</span>
+        <span class="emoji" data-value="9" aria-label="Excited">😆</span>
+        <span class="emoji" data-value="10" aria-label="In Love">😍</span>
+    </div>
+    <div class="result">
+        <p id="quote"></p>
+        <p id="tip"></p>
+    </div>
+
+    <script>
+        const quotes = {
+            1: ["It's okay to feel sad sometimes.", "Take a deep breath and let it out slowly."],
+            2: ["Things will get better.", "Talk to someone you trust."],
+            3: ["Neutral is a good place to start.", "Try doing something you enjoy."],
+            4: ["You're doing great!", "Keep smiling!"],
+            5: ["Happiness looks good on you.", "Spread your positivity!"],
+            6: ["You're shining bright!", "Keep up the good vibes!"],
+            7: ["You're amazing!", "Celebrate your wins!"],
+            8: ["Keep being awesome!", "Share your happiness with others!"],
+            9: ["You're unstoppable!", "Keep chasing your dreams!"],
+            10: ["You're radiating joy!", "Keep spreading love and kindness!"]
+        };
+
+        const emojis = document.querySelectorAll('.emoji');
+        const quoteElement = document.getElementById('quote');
+        const tipElement = document.getElementById('tip');
+
+        emojis.forEach(emoji => {
+            emoji.addEventListener('click', () => {
+                // Remove previous selection
+                emojis.forEach(e => e.classList.remove('selected'));
+                emoji.classList.add('selected');
+
+                const value = emoji.getAttribute('data-value');
+                const messages = quotes[value];
+                let randomQuote, randomTip;
+
+                // Ensure quote and tip are different
+                do {
+                    randomQuote = messages[Math.floor(Math.random() * messages.length)];
+                    randomTip = messages[Math.floor(Math.random() * messages.length)];
+                } while (randomQuote === randomTip);
+
+                quoteElement.textContent = `Quote: ${randomQuote}`;
+                tipElement.textContent = `Tip: ${randomTip}`;
+            });
+        });
+    </script>
+</body>
+</html>
